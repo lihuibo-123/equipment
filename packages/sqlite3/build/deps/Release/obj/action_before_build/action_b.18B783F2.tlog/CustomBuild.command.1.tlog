@@ -1,0 +1,3 @@
+^D:\MSYS64\HOME\BUSINESS\SOYBEAN-ADMIN\PACKAGES\SQLITE3\DEPS\SQLITE-AUTOCONF-3440200.TAR.GZ
+call call node "../../deps/extract.js" "../../deps/sqlite-autoconf-3440200.tar.gz" "D:\msys64\home\business\soybean-admin\packages\sqlite3\build\Release\obj/global_intermediate"
+if %errorlevel% neq 0 exit /b %errorlevel%

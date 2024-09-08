@@ -1,0 +1,69 @@
+{
+  "name": "@sa/sqlite3",
+  "description": "Asynchronous, non-blocking SQLite3 bindings",
+  "version": "5.1.7",
+  "homepage": "https://github.com/TryGhost/node-sqlite3",
+  "author": {
+    "name": "Mapbox",
+    "url": "https://mapbox.com/"
+  },
+  "binary": {
+    "napi_versions": [
+      3,
+      6
+    ]
+  },
+  "files": [
+    "binding.gyp",
+    "deps/",
+    "lib/*.js",
+    "lib/*.d.ts",
+    "src/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TryGhost/node-sqlite3.git"
+  },
+  "dependencies": {
+    "bindings": "^1.5.0",
+    "node-addon-api": "^7.0.0",
+    "prebuild-install": "^7.1.1",
+    "tar": "^6.1.11"
+  },
+  "devDependencies": {
+    "eslint": "8.56.0",
+    "mocha": "10.2.0",
+    "prebuild": "12.1.0"
+  },
+  "peerDependencies": {
+    "node-gyp": "8.x"
+  },
+  "peerDependenciesMeta": {
+    "node-gyp": {
+      "optional": true
+    }
+  },
+  "optionalDependencies": {
+    "node-gyp": "8.x"
+  },
+  "scripts": {
+    "prebuild": "prebuild --runtime napi --all --verbose",
+    "rebuild": "node-gyp rebuild",
+    "upload": "prebuild --verbose --prerelease",
+    "test": "node test/support/createdb.js && mocha -R spec --timeout 480000"
+  },
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "sql",
+    "sqlite",
+    "sqlite3",
+    "database"
+  ],
+  "main": "./lib/sqlite3",
+  "types": "./lib/sqlite3.d.ts",
+  "renovate": {
+    "extends": [
+      "@tryghost:base"
+    ]
+  }
+}
