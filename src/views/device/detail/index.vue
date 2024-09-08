@@ -26,16 +26,14 @@ const state = reactive({
 const containerRef = ref<HTMLDivElement | null>(null);
 const iframeRef = ref<HTMLIFrameElement | null>(null);
 
-const updateIframeSrc =  (url:string) => {
+const updateIframeSrc = (url:string) => {
   state.iframeSrc = url;
 }
 
 const sendMessageToIframe = (message: object) => {
-  // 获取 sessionToken
   console.log('发送中---');
   const sessionToken = localStg.get("sessionToken");
   if (sessionToken) {
-    // 将 sessionToken 添加到消息对象中
     message.sessionToken = sessionToken;
   }
 
@@ -44,10 +42,8 @@ const sendMessageToIframe = (message: object) => {
   }
 };
 
-
 const setupMessageListener = () => {
   window.addEventListener('message', (event) => {
-    // 确保消息来源是您信任的源
     if (event.origin !== 'http://localhost:4200') return;
     console.log('Message from iframe:', event.data);
     // 处理消息
@@ -56,39 +52,28 @@ const setupMessageListener = () => {
 
 const appendParamsToUrl = (url:string, params:Record<string, string>) => {
   const queryParams = new URLSearchParams(params);
-  return `http://localhost:4200/home?device=pc&${queryParams.toString()}`;
+  return `${url}&${queryParams.toString()}`;
 }
 
+const clgsrc = () => { console.log(state.iframeSrc) }
 
+let intervalId: ReturnType<typeof setInterval> | null = null;
 
-const clgsrc = () => {console.log(state.iframeSrc)}
-// const handleIframeLoad = () => {
-//   resizeIframe();
-//   window.addEventListener('resize', resizeIframe);
-// };
-
-// const resizeIframe = () => {
-//   if (iframeRef.value && containerRef.value) {
-//     const containerWidth = containerRef.value.clientWidth;
-//     const containerHeight = containerRef.value.clientHeight;
-
-//     iframeRef.value.contentWindow?.postMessage({
-//       type: 'resize',
-//       width: containerWidth,
-//       height: containerHeight
-//     }, '*');
-//   }
-// };
-
+const sendRandomMessage = () => {
+  const randomMessage = { randomValue: Math.random() };
+  sendMessageToIframe(randomMessage);
+};
 
 onMounted(() => {
-  // resizeIframe();
-sendMessageToIframe({name: '111', id: 222})
+  sendMessageToIframe({name: '111', id: 222});
   setupMessageListener();
+  intervalId = setInterval(sendRandomMessage, 1000); // 每秒发送一次
 });
 
 onBeforeUnmount(() => {
-  // window.removeEventListener('resize', resizeIframe);
+  if (intervalId) {
+    clearInterval(intervalId); // 清除定时器
+  }
 });
 </script>
 
