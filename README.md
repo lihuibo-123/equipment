@@ -1,6 +1,8 @@
 <div align="center">
 	<img src="./public/favicon.svg" width="160" />
 	<h1>SoybeanAdmin</h1>
+  <div>pnpm i安装</div>
+  <div>同时执行 pnpm client和 pnpm dev启动项目</div>
   <span>English | <a href="./README.zh_CN.md">中文</a></span>
 </div>
 
